@@ -1,0 +1,168 @@
+/**
+#136 single number
+Given an array of integers, every element appears twice except for one. Find that single one.
+
+Note:
+Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+**/
+/** focus on XOR(exclusive OR) T^T = F F^F = F F^T = T a^a^b = b
+**/
+public class Solution {
+    public int singleNumber(int[] nums) {
+       int result = nums[0];
+       for ( int i = 1; i < nums.length; i++){
+          result = nums[i] ^ result;
+          
+       } 
+       return result;
+    }
+}
+
+/**
+#104  maximum_depth_of_binary_tree
+Given a binary tree, find its maximum depth.
+
+The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+**/
+
+// focus on recursion and tree traversing
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root == null){
+            return 0;
+        }
+        int leftDepth = maxDepth(root.left);
+        int rightDepth = maxDepth(root.right);
+        return Math.max(leftDepth, rightDepth) +1;
+        
+    }
+}
+
+/**
+#237 delete_node_in_a_linked_list
+Write a function to delete a node (except the tail) in a singly linked list, given only access to that node.
+
+Supposed the linked list is 1 -> 2 -> 3 -> 4 and you are given the third node with value 3, the linked list should become 1 -> 2 -> 4 after calling your function.
+**/
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public void deleteNode(ListNode node) {
+        if(node==null) return;  
+        node.val = node.next.val;  
+        node.next = node.next.next; 
+    }
+}
+
+
+/**
+#258 Add Digits
+Given a non-negative integer num, repeatedly add all its digits until the result has only one digit.
+
+For example:
+
+Given num = 38, the process is like: 3 + 8 = 11, 1 + 1 = 2. Since 2 has only one digit, return it.
+
+Follow up:
+Could you do it without any loop/recursion in O(1) runtime?
+
+**/
+public class Solution {
+    public int addDigits(int num) {
+        //digital root
+        if(num == 0){
+            return 0;
+        }else{
+            return (num-1)%9 +1;
+        }
+    }
+}
+
+
+/**
+#100 same tree
+Given two binary trees, write a function to check if they are equal or not.
+
+Two binary trees are considered equal if they are structurally identical and the nodes have the same value.
+**/
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if(p != null & q != null){
+            if(p.val != q.val){
+                return false;
+            }else{
+                return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+            }
+        }else if(p == null && q == null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+}
+
+/**
+#122 best time to buy and sell Stocks ||
+Say you have an array for which the ith element is the price of a given stock on day i.
+
+Design an algorithm to find the maximum profit. 
+You may complete as many transactions as you like (ie, buy one and sell one share of the stock multiple times). 
+However, you may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+**/
+public class Solution {
+    public int maxProfit(int[] prices) {
+        // one in one out
+        int profit = 0;
+        for(int i= 1; i < prices.length; i++){
+            if(prices[i] > prices[i-1]){
+                profit += prices[i]- prices[i-1];
+            }
+        }
+        
+        return profit;
+    }
+}
+
+/**#191 Number of 1 Bits 
+Write a function that takes an unsigned integer and returns the number of ’1' bits it has (also known as the Hamming weight).
+
+For example, the 32-bit integer ’11' has binary representation 00000000000000000000000000001011, so the function should return 3.
+
+Credits:
+Special thanks to @ts for adding this problem and creating all test cases.
+**/
+public class Solution {
+    // you need to treat n as an unsigned value
+    public int hammingWeight(int n) {
+        int result = 0;
+       while(n != 0){
+           n = n&(n-1);
+           result ++;
+       }
+       return result;
+    }
+}
